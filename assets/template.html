@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{DASHBOARD_TITLE}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.19/build/index.min.js"></script>
+  <style>
+    /* === THEME VARIABLES (replace with chosen style) === */
+    :root {
+      --bg-primary: #f8f9fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f3f5;
+      --border-color: #e9ecef;
+      --text-primary: #212529;
+      --text-secondary: #6c757d;
+      --text-muted: #adb5bd;
+      --accent: #4263eb;
+      --accent-secondary: #20c997;
+      --danger: #fa5252;
+      --warning: #fab005;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08);
+      --radius: 10px;
+    }
+
+    /* === BASE === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* === HEADER === */
+    .header {
+      padding: 32px 24px 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    .header .updated {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* === DASHBOARD === */
+    .dashboard {
+      display: grid;
+      gap: 20px;
+      padding: 16px 24px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* === KPI ROW === */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .kpi-card .label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+    .kpi-card .value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 8px 0 4px;
+    }
+    .kpi-card .change {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .kpi-card .change.up { color: var(--accent-secondary); }
+    .kpi-card .change.down { color: var(--danger); }
+    .kpi-card .change.neutral { color: var(--text-muted); }
+
+    /* === CHART LAYOUT === */
+    .chart-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .chart-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .chart-full { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .chart-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .chart-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+
+    /* === CHART CARD === */
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .chart-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .chart-card .subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: -12px;
+      margin-bottom: 16px;
+    }
+    .chart-container {
+      width: 100%;
+      height: 300px;
+    }
+    .chart-container.tall { height: 400px; }
+    .chart-container.short { height: 220px; }
+
+    /* === TABLE === */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border-color);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+    }
+    .data-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header { padding: 20px 16px 12px; }
+      .header h1 { font-size: 20px; }
+      .dashboard { padding: 12px 16px 32px; gap: 16px; }
+      .chart-row-2, .chart-row-3, .chart-2-1, .chart-1-2 {
+        grid-template-columns: 1fr;
+      }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .kpi-card .value { font-size: 24px; }
+    }
+
+    /* === FOOTER === */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>{{DASHBOARD_TITLE}}</h1>
+  <p>{{DASHBOARD_SUBTITLE}}</p>
+  <div class="updated">Updated: {{UPDATED_TIME}}</div>
+</div>
+
+<div class="dashboard">
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+    <!-- {{KPI_CARDS}} -->
+  </div>
+
+  <!-- Charts -->
+  <!-- {{CHART_SECTIONS}} -->
+</div>
+
+<div class="footer">
+  Generated with Data Dashboard Skill &bull; Powered by VChart
+</div>
+
+<script>
+// === CHART INITIALIZATION ===
+// {{CHART_SCRIPTS}}
+
+// Handle resize
+window.addEventListener('resize', () => {
+  if (window._charts) {
+    window._charts.forEach(c => c.resize());
+  }
+});
+</script>
+</body>
+</html>
