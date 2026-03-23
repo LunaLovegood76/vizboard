@@ -1,5 +1,6 @@
 ---
 name: vizboard
+version: 1.0.0
 description: >
   Transform data from Excel (.xlsx/.xls), CSV, TSV, JSON, JSONL files, or inline
   text/tables into beautiful, interactive dashboard web pages (standalone HTML) with
@@ -10,6 +11,11 @@ description: >
   or describes data and wants charts, (3) user asks for a dashboard, report, or data
   visualization, (4) user asks to "make this data visual" or "create charts from this".
   Do NOT use for: editing Excel files (use xlsx skill), creating presentations (use pptx skill).
+metadata:
+  openclaw:
+    requires:
+      bins: [python3]
+    homepage: https://github.com/LunaLovegood76/vizboard
 ---
 
 # Data Dashboard

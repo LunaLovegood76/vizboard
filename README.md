@@ -2,7 +2,7 @@
 
 > Turn any data into a beautiful, interactive dashboard — in one sentence.
 
-Vizboard is a [Claude Code Skill](https://docs.anthropic.com/en/docs/claude-code) that transforms data files (Excel, CSV, JSON) or inline data into stunning, self-contained HTML dashboard pages powered by [VChart](https://github.com/VisActor/VChart) (by ByteDance VisActor).
+Vizboard is an [AgentSkills](https://agentskills.io)-compatible skill that transforms data files (Excel, CSV, JSON) or inline data into stunning, self-contained HTML dashboard pages powered by [VChart](https://github.com/VisActor/VChart) (by ByteDance VisActor). Works with **Claude Code**, **OpenClaw**, and any AgentSkills-compatible agent.
 
 Just tell Claude what you want to visualize. Vizboard handles the rest — data extraction, chart selection, layout design, and HTML generation.
 
@@ -25,17 +25,37 @@ Given an e-commerce Excel file with store performance data, Vizboard generates:
 
 *KPI cards + grouped bar charts + donut charts + radar plots + data tables — all in one page.*
 
+## Compatibility
+
+Vizboard follows the [AgentSkills](https://agentskills.io) open standard. It works with any platform that supports `SKILL.md` skills, including:
+
+- **Claude Code** — Anthropic's official CLI
+- **OpenClaw** — AI Agent Gateway (30+ messaging channels)
+- Any AgentSkills-compatible agent
+
 ## Installation
 
-### Claude Code (recommended)
+### Claude Code
 
 ```bash
 claude install-skill LunaLovegood76/vizboard
 ```
 
+### OpenClaw
+
+```bash
+# Clone to OpenClaw skills directory
+git clone https://github.com/LunaLovegood76/vizboard.git ~/.openclaw/skills/vizboard
+
+# Or symlink if you already cloned elsewhere
+ln -s /path/to/vizboard ~/.openclaw/skills/vizboard
+```
+
+Then restart the gateway: `openclaw gateway restart`
+
 ### Manual
 
-Download the latest `.skill` file from [Releases](https://github.com/LunaLovegood76/vizboard/releases) and install it in Claude Code.
+Download or clone this repo and place the folder in your agent's skills directory.
 
 ## Usage
 
