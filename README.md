@@ -21,7 +21,7 @@ Just tell Claude what you want to visualize. Vizboard handles the rest — data 
 
 Given an e-commerce Excel file with store performance data, Vizboard generates:
 
-![Dashboard Preview](assets/preview.png)
+<img width="2988" height="4973" alt="image" src="https://github.com/user-attachments/assets/a4c13a28-53c7-49cf-a397-182bf80e7560" />
 
 *KPI cards + grouped bar charts + donut charts + radar plots + data tables — all in one page.*
 
